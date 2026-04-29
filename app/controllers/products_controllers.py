@@ -1,21 +1,8 @@
-from decimal import Decimal
-
 from fastapi import HTTPException, status
-from pydantic import BaseModel, ConfigDict
 from sqlalchemy.orm import Session
 
 from app.models.models import Inventory, Product, Warehouse
-
-
-class CreateProductPayload(BaseModel):
-    name: str
-    sku: str
-    price: Decimal
-    warehouse_id: int
-    initial_quantity: int
-    is_bundle: bool = False
-
-    model_config = ConfigDict(extra="forbid")
+from app.schemas.products_schemas import CreateProductPayload
 
 
 def create_product_with_inventory(payload: CreateProductPayload, db: Session) -> dict:
@@ -38,6 +25,7 @@ def create_product_with_inventory(payload: CreateProductPayload, db: Session) ->
         sku=payload.sku,
         price=payload.price,
         is_bundle=payload.is_bundle,
+        low_stock_threshold=payload.low_stock_threshold,
     )
     db.add(product)
     db.flush()

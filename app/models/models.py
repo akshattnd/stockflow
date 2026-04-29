@@ -43,6 +43,7 @@ class Product(Base):
     sku = Column(String, unique=True, nullable=False)
     price = Column(Numeric(10, 2), nullable=False)
     is_bundle = Column(Boolean, default=False, nullable=False)
+    low_stock_threshold = Column(Integer, nullable=False, default=20)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     bundle_components = relationship(

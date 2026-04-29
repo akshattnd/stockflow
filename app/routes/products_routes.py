@@ -1,11 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from app.controllers.products_controllers import (
-    CreateProductPayload,
-    create_product_with_inventory,
-)
+from app.controllers.products_controllers import create_product_with_inventory
 from app.db.session import get_db
+from app.schemas.products_schemas import CreateProductPayload
 
 router = APIRouter(prefix="/api/products", tags=["products"])
 
